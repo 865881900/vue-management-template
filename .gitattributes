@@ -1,0 +1,5 @@
+# 将文本文件的行结束符转换为lf
+
+*.js    eol=lf
+*.jsx   eol=lf
+*.json  eol=lf
