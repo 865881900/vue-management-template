@@ -1,0 +1,30 @@
+#EditorConfig帮助开发人员在不同的编辑器和IDE之间定义和维护一致的编码样式。EditorConfig项目由用于定义编码样式的文件格式和一组文本编辑器插件组成，
+# 这些插件使编辑器能够读取文件格式并遵循定义的样式。EditorConfig文件易于阅读，并且与版本控制系统配合使用。
+
+
+# 告诉EditorConfig插件，这是根文件，不用继续往上查找
+root = true
+
+# 匹配全部文件
+[*]
+#设置字符集
+charset = utf-8
+# 结尾换行符，可选"lf"、"cr"、"crlf"
+end_of_line = lf
+# 在文件结尾插入新行
+insert_final_newline = true
+# 删除一行中的前后空格
+trim_trailing_whitespace = true
+# 缩进风格，可选"space"、"tab"
+indent_style = space
+# 缩进的空格数
+indent_size = 2
+# 一行最大长度
+max_line_length = 120
+
+
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

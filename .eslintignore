@@ -1,0 +1,12 @@
+/node_modules
+/dist
+/public
+**/*.svg
+**/*.sh
+*.md
+*.woff
+*.ttf
+.vscode
+.idea
+.husky
+vue.config.js
