@@ -1,7 +1,24 @@
+# 启动项目
+
+```
+npm run build
+```
+
+or
+
+```
+yarn build
+```
+
+
+
+
+
 # 说明
 > 该项目为gld-cli脚手架vue2.0的模板项目
 
-# 目录说明
+#目录说明
+
 ```
 VueManagementTemplate
 ├─.browserslistrc 分享目标浏览器和nodejs版本在不同的前端工具。这些工具能根据目标浏览器自动来进行配置，git地址: https://github.com/browserslist/browserslist
@@ -55,5 +72,3 @@ npx commitlint --from HEAD~1 --to HEAD --verbose
 ```shell
 chmod 777 .husky/*
 ```
-
-
