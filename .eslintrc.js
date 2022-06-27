@@ -238,7 +238,7 @@ module.exports = defineConfig({
     'no-whitespace-before-property': 2, // 禁止属性前有空白
     'object-curly-newline': 2, // 强制大括号内换行符的一致性
     'object-curly-spacing': [2, 'always'], // 强制在大括号中使用一致的空格
-    'one-var': 2, // 强制函数中的变量要么一起声明要么分开声明
+    'one-var': 0, // 强制函数中的变量要么一起声明要么分开声明
     'operator-linebreak': 2, // 强制操作符使用一致的换行符
     quotes: [2, 'single'], // 引号类型 `` "" ''
     semi: [2, 'always'], // 语句强制分号结尾

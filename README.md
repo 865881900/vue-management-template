@@ -21,6 +21,7 @@ yarn build
 
 ```
 VueManagementTemplate
+├─src
 ├─.browserslistrc 分享目标浏览器和nodejs版本在不同的前端工具。这些工具能根据目标浏览器自动来进行配置，git地址: https://github.com/browserslist/browserslist
 ├─.commitlintrc.js  git提交规范 commitLint; git地址: https://github.com/conventional-changelog/commitlint
 ├─.editorconfig 帮助开发人员在不同的编辑器和IDE之间定义和维护一致的编码样式; 官网: https://editorconfig.org/
@@ -32,8 +33,16 @@ VueManagementTemplate
 ├─.stylelintrc.js stylelint 格式规则; get地址: https://github.com/stylelint/stylelint
 ├─README.md 项目说明
 ├─babel.config.js babel配置
-├─package-lock.json
 ├─package.json
+├─webpack
+|    ├─webpack.base.js webpack基础配置
+|    ├─webpack.dev.js  本地环境配置
+|    ├─webpack.prod.dev.js 测试环境配置
+|    └webpack.prod.js 生产环境配置
+├─src
+|  ├─App.vue
+|  ├─a.js
+|  └main.js
 └result.txt 使用treer生成目录结构文件存储, 使用treer, 需要安装 sudo npm i treer -g
 ```
 

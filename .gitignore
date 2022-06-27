@@ -3,6 +3,7 @@ result.txt
 node_modules
 /dist
 /*.zip
+
 .git
 .vscode
 .idea
