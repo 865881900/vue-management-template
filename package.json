@@ -8,7 +8,7 @@
     "lint:pretty": "pretty-quick --staged",
     "install:husky": "is-ci || husky install",
     "treer": "treer -e ./result.txt -i \"/node_|.git|.vscode|.husky|.idea|static/\"",
-    "build:dev": "webpack --config ./webpack/webpack.prod.dev.js",
+    "build:dev": "webpack --config ./webpack/webpack.prod.dev.js --profile",
     "build": "webpack --config ./webpack/webpack.prod.js",
     "dev": "npm run serve",
     "serve": "webpack serve --config ./webpack/webpack.dev.js"
@@ -25,6 +25,7 @@
     "@vue/cli-plugin-babel": "^5.0.6",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@webpack-cli/generators": "^2.5.0",
+    "assert": "^2.0.0",
     "autoprefixer": "^10.4.7",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^8.2.5",
@@ -38,12 +39,14 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.20.0",
+    "express": "^4.18.1",
     "file-loader": "6.2",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.0",
     "is-ci": "^3.0.1",
     "lint-staged": "^13.0.2",
     "mini-css-extract-plugin": "^2.6.1",
+    "mocha": "^10.0.0",
     "postcss": "^8.4.14",
     "postcss-html": "^1.4.1",
     "postcss-loader": "^7.0.0",
@@ -64,11 +67,27 @@
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^5.73.0",
+    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.2",
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "element-gui": "^1.6.3",
+    "loadsh": "^0.0.4",
+    "speed-measure-webpack-plugin": "^1.5.0",
     "vue": "^2.6.11"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/865881900/vue-management-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/865881900/vue-management-template/issues"
+  },
+  "homepage": "https://github.com/865881900/vue-management-template#readme"
 }

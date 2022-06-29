@@ -3,7 +3,9 @@
  */
 
 const { merge } = require('webpack-merge');
-const webpackBase = require('./webpack.base');
+const webpackBase = require('./webpack.base.js');
+const { VueLoaderPlugin } = require('vue-loader');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpackDev = {
   devServer: {
     host: '0.0.0.0',
@@ -14,6 +16,13 @@ const webpackDev = {
     } // 配置自动启动浏览器
   },
   devtool: 'cheap-source-map',
-  mode: 'development'
+  mode: 'development',
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name][contenthash:8].css'
+    }),
+    new VueLoaderPlugin()
+  ]
 };
+
 module.exports = merge(webpackDev, webpackBase);

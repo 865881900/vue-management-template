@@ -185,7 +185,7 @@ module.exports = defineConfig({
     'vars-on-top': 2, // 要求所有的 var 声明出现在它们所在的作用域顶部
     yoda: [2, 'never'], // 禁止尤达条件
     // Variables
-    'init-declarations': [2, 'always'], // 声明时必须赋初值
+    'init-declarations': [0, 'always'], // 声明时必须赋初值
     'no-shadow': 1, // 禁止变量声明与外层作用域的变量同名
     'no-undef-init': 2, // 禁止将变量初始化为 undefined
     'no-undefined': 2, // 禁止将 undefined 作为标识符

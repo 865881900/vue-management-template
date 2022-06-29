@@ -5,7 +5,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 module.exports = {
@@ -73,21 +72,16 @@ module.exports = {
     new CleanWebpackPlugin(),
     // 优化命令行
     new FriendlyErrorsWebpackPlugin(),
+    // html
     new HtmlWebpackPlugin({
       template: './index.html'
-    }),
-    // css文件单独打包
-    new MiniCssExtractPlugin({
-      filename: '[name][contenthash:8].css'
-    }),
-    new VueLoaderPlugin()
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    })
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       '@': path.resolve('src')
     }
-  }
+  },
+  stats: 'errors-only'
 };
