@@ -40,6 +40,22 @@ app.route('/test/patch').patch((req, res) => {
   });
 });
 
+app.route('/test/401').get((req, res) => {
+  res.status(401).send('Something broke!');
+});
+
+app.route('/test/500').get((req, res) => {
+  res.status(500).send({
+    message: '500原因'
+  });
+});
+
+app.route('/test/501').get((req, res) => {
+  res.status(501).send({
+    message: '501原因'
+  });
+});
+
 app.listen(3000, () => {
   console.log(`Example app listening on port ${3000}`);
 });

@@ -7,7 +7,7 @@
  */
 import axios from 'axios';
 import _ from 'loadsh';
-import { callbackMapByState } from './callbackMapByState.js';
+import { callbackMap } from './callbackMap.js';
 
 const responseCallback = (data) => data;
 
@@ -21,18 +21,17 @@ export class Axios {
   /**
    * 初始化Ajax对象
    * @param defaultConfig:<Function(axios)>: 初始化axios的默认配置
+   * @param vueAppApi:<Function(axios)>: 默认api路径
    */
-  constructor(defaultConfig) {
+  constructor(defaultConfig, vueAppApi) {
     this.axios = axios.create(defaultConfig);
+    this.vueAppApi = vueAppApi;
   }
 
-  async request(urls, datas = {}, method = 'GET', config = {}) {
-    const url = urls;
+  async request(url, datas = {}, method = 'GET', config = {}) {
     // 请求方法转为大写
     const _method = method.toUpperCase();
-    let status; // 响应状态
     let fun; // 回调函数
-    let _response; // 响应对象
     try {
       // 检查方法有效性
       if (!Axios.METHODS_LIST.includes(_method)) {
@@ -42,24 +41,23 @@ export class Axios {
       // 合并config
       const configs = {
         ...config,
-        url: `${url}${this._jointAjaxData(datas, method)}timestamp=${new Date().getTime()}`,
+        url: `${this.vueAppApi}${url}${this._jointAjaxData(datas, method)}timestamp=${new Date().getTime()}`,
         method: _method
       };
       // 如果不是类似get请求, 把参数添加到body中
       if (!Axios.JOINT_METHOD.includes(_method)) {
         config.data = datas;
       }
-      _response = await axios.request(configs);
-      const { data: responseData } = _response;
-      status = _response.status;
+      const { data: responseData } = await axios.request(configs);
       // 根据statue和code 返回回调函数,如果没有配置,则使用默认回调函数;
-      fun = callbackMapByState.code[responseData.code] || callbackMapByState.status[status] || responseCallback;
+      fun = callbackMap.code[responseData.code] || callbackMap.status[responseData.status] || responseCallback;
       // 执行回调函数
       if (_.isFunction(fun)) {
         return fun(responseData);
       }
     } catch (e) {
-      fun = callbackMapByState[status];
+      const response = e.response || {};
+      fun = callbackMap.status[response.status];
       if (_.isFunction(fun)) {
         return fun(e);
       }
@@ -121,7 +119,7 @@ export class Axios {
     return this.request(url, data, 'PUT', config);
   }
 
-  // PUT method
+  // PATCH method
   patch(url, data, config) {
     return this.request(url, data, 'PATCH', config);
   }

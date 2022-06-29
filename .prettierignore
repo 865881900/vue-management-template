@@ -10,4 +10,5 @@
 .idea
 .husky
 .npmrc
+.env-cmdrc
 *.txt

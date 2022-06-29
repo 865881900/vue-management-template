@@ -1,11 +1,13 @@
 // 测试封装的axios
 import assert from 'assert';
-import { axios } from '../../apis';
-import { Axios } from '../../apis/Axios.js';
+import { axios } from '../../http/index.js';
+import { Axios } from '../../http/Axios.js';
 import getTag from 'loadsh/_getTag.js';
 
+const url = 'http://localhost:3000/';
+// 需要启动 ./serve.js
+// 执行该测试用例需要在package.json 中配置  "type":"module"
 describe('test apis module', () => {
-  const url = 'http://localhost:3000/';
   it('test axios GET method ', async () => {
     let data = await axios.get(`${url}test/get`);
     assert.equal(data.code, 200);
@@ -50,5 +52,22 @@ describe('test Axios object', () => {
     const url = axios._jointAjaxData(data);
     assert(url, '?a=12&');
     console.log(getTag({}));
+  });
+  it('test state:401 callback', async () => {
+    await axios.get(`${url}test/401`);
+  });
+  it('test state:500 callback', async () => {
+    await axios.get(`${url}test/500`);
+  });
+  it('test state:501 callback', async () => {
+    await axios
+      .get(`${url}test/501`)
+      .then(() => {
+        assert.fail('未达到预期');
+      })
+      .catch(() => {
+        assert.ok(true);
+        console.log('达到预期');
+      });
   });
 });

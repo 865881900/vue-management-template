@@ -1,7 +1,6 @@
 /**
  * 本地环境webpack配置
  */
-
 const { merge } = require('webpack-merge');
 const webpackBase = require('./webpack.base.js');
 const { VueLoaderPlugin } = require('vue-loader');

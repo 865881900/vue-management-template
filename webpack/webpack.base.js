@@ -1,16 +1,18 @@
 /**
  * webpack打包基础配置
  */
-
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
+
+console.log(`\x1b[91m${`当前启动模式为:${process.env.MODEL}`}\x1b[0m`);
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, '../dist')
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: process.env.VUE_APP_publicPath
   },
   module: {
     rules: [
@@ -80,7 +82,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': path.resolve('src')
+      '@': path.resolve('src'),
+      api: path.resolve('http/api')
     }
   },
   stats: 'errors-only'

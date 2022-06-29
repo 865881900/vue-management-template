@@ -1,6 +1,6 @@
 // import { Message } from 'element-gui';
 
-export const callbackMapByState = {
+export const callbackMap = {
   // response.status    映射处理函数
   status: {
     401: (data) => {
@@ -9,7 +9,7 @@ export const callbackMapByState = {
       // 无权限操作
     },
     500: (data) => {
-      console.log(data);
+      console.log('500', data.toString());
       // Message({
       //   showClose: true,
       //   message: '服务器异常',
