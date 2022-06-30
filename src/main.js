@@ -1,8 +1,16 @@
 import Vue from 'vue';
-import App from './App.vue';
+import App from '@/App.vue';
+import('./a.js');
+import ElementUI from 'element-gui';
+import 'element-gui/lib/theme-chalk/index.css';
 
-console.log(process.env);
+Vue.use(ElementUI);
+
+import router from '@/router';
+import store from '@/store';
+
 new Vue({
-  name: 'Main',
+  router,
+  store,
   render: (h) => h(App)
 }).$mount('#app');

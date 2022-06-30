@@ -8,6 +8,8 @@
 import axios from 'axios';
 import _ from 'loadsh';
 import { callbackMap } from './callbackMap.js';
+import requestInterceptors from './interceptors/request.js';
+import responseInterceptors from './interceptors/response.js';
 
 const responseCallback = (data) => data;
 
@@ -23,7 +25,9 @@ export class Axios {
    * @param defaultConfig:<Function(axios)>: 初始化axios的默认配置
    * @param vueAppApi:<Function(axios)>: 默认api路径
    */
-  constructor(defaultConfig, vueAppApi) {
+  constructor(defaultConfig, vueAppApi = '') {
+    // 初始化拦截器
+    this._initInterceptors();
     this.axios = axios.create(defaultConfig);
     this.vueAppApi = vueAppApi;
   }
@@ -61,8 +65,18 @@ export class Axios {
       if (_.isFunction(fun)) {
         return fun(e);
       }
-      throw new Error(e);
+      return Promise.reject(e);
     }
+  }
+
+  // 初始化拦截器
+  _initInterceptors() {
+    requestInterceptors.forEach(({ onFulfilled, onRejected, options }) => {
+      this.addInterceptorsRequest(onFulfilled, onRejected, options);
+    });
+    responseInterceptors.forEach(({ onFulfilled, onRejected, options }) => {
+      this.addInterceptorsResponse(onFulfilled, onRejected, options);
+    });
   }
 
   // 拼接url
@@ -122,5 +136,13 @@ export class Axios {
   // PATCH method
   patch(url, data, config) {
     return this.request(url, data, 'PATCH', config);
+  }
+
+  addInterceptorsRequest(onFulfilled, onRejected, options) {
+    axios.interceptors.request.use(onFulfilled, onRejected, options);
+  }
+
+  addInterceptorsResponse(onFulfilled, onRejected, options) {
+    axios.interceptors.response.use(onFulfilled, onRejected, options);
   }
 }

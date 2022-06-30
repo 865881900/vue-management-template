@@ -1,17 +1,21 @@
-# 启动项目
+#项目命令
 
+###1: 本地
+```
+npm run dev
+// or
+npm run serve
+```
+
+###2: 测试环境打包
+```
+npm run build:dev
+```
+
+###3: 正式环境打包
 ```
 npm run build
 ```
-
-or
-
-```
-yarn build
-```
-
-
-
 
 
 # 说明

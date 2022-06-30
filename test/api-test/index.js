@@ -1,7 +1,6 @@
 // 测试封装的axios
 import assert from 'assert';
-import { axios } from '../../http/index.js';
-import { Axios } from '../../http/Axios.js';
+import { axios } from '../../src/http/index.js';
 import getTag from 'loadsh/_getTag.js';
 
 const url = 'http://localhost:3000/';
@@ -44,7 +43,6 @@ describe('test apis module', () => {
   });
 });
 describe('test Axios object', () => {
-  const axios = new Axios();
   it('test axios._jointAjaxData method', function () {
     const data = {
       a: 12
@@ -69,5 +67,8 @@ describe('test Axios object', () => {
         assert.ok(true);
         console.log('达到预期');
       });
+  });
+  it('test interceptors', async () => {
+    await axios.get(`${url}test/501`);
   });
 });

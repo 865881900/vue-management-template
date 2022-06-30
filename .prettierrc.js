@@ -3,7 +3,7 @@ module.exports = {
   tabWidth: 2, // 缩进字节数
   useTabs: false, // 缩进不使用tab，使用空格
   semi: true, // 句尾添加分号
-  vueIndentScriptAndStyle: true,
+  vueIndentScriptAndStyle: false, // 建议关闭, 很恶心的规则;  如果开启,那么在vue的script和style标签中,顶级开启缩进
   singleQuote: true, // 使用单引号代替双引号
   quoteProps: 'as-needed',
   bracketSpacing: true, // 在对象，数组括号与文字之间加空格 "{ foo: bar }"
