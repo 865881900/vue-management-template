@@ -39,39 +39,39 @@ axios.postJ();// content-type: application/json;charset=UTF-8
 
 # API
 
-### axios.request(url,datas, method, config);
+### axios.request(url,datas, method, webpackConfig);
 options:
 ```
 url<String>: 请求路径
 datas<Object>: 请求参数
 method<String>: 请求方式: 'GET', 'DELETE', 'HEAD', 'POST', 'PUT', 'PATCH', 支持小写; 默认值:'GET'
-config<Object>: 本次请求配置
+webpackConfig<Object>: 本次请求配置
 ```
 
 options:
 
-### axios.get(url, data, config);
-###axios.head(url,datas, config);
-###axios.delete(url,datas, config);
-###axios.post(url,datas, config);
-###axios.put(url,datas, config);
-###axios.patch(url,datas, config);
+### axios.get(url, data, webpackConfig);
+###axios.head(url,datas, webpackConfig);
+###axios.delete(url,datas, webpackConfig);
+###axios.post(url,datas, webpackConfig);
+###axios.put(url,datas, webpackConfig);
+###axios.patch(url,datas, webpackConfig);
 options:
 ```
 url<String>: 请求路径
 datas<Object>: 请求参数
-config<Object>: 本次请求配置
+webpackConfig<Object>: 本次请求配置
 ```
 >  content-type: application/x-www-form-urlencoded
 
-###axios.postJ(url,datas, config);
-###axios.putJ(url,datas, config);
-###axios.patchJ(url,datas, config);
+###axios.postJ(url,datas, webpackConfig);
+###axios.putJ(url,datas, webpackConfig);
+###axios.patchJ(url,datas, webpackConfig);
 ```
 options:
 url<String>: 请求路径
 datas<Object>: 请求参数
-config<Object>: 本次请求配置
+webpackConfig<Object>: 本次请求配置
 ```
 > content-type: application/json;charset=UTF-8
 

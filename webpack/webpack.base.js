@@ -8,16 +8,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const webpack = require('webpack');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const webpackConfig = require('./webpackConfig');
 // const PostcssPresetEnv = require('postcss-preset-env');
 // 多线程构建,预热
 // const threadLoader = require('thread-loader');
 // threadLoader.warmup({}, ['babel-loader']);
-console.log(`\x1b[91m${`当前启动模式为:${process.env.MODEL}`}\x1b[0m`);
+console.log(`\x1b[91m${`执行配置:${webpackConfig.EXPLAIN}`}\x1b[0m`);
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: process.env.VUE_APP_publicPath
+    publicPath: webpackConfig.VUE_APP_PUBLIC_PATH
   },
   module: {
     rules: [
@@ -61,6 +62,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.ENV_NODE': JSON.stringify(process.env.ENV_NODE)
+    }),
+
     // dist文件目录清理
     new CleanWebpackPlugin(),
     // 优化命令行
@@ -82,7 +87,7 @@ module.exports = {
     new AddAssetHtmlPlugin({
       glob: path.resolve(__dirname, '../build/library/*.dll.js'),
       outputPath: '/dll',
-      publicPath: `${process.env.VUE_APP_publicPath}dll`
+      publicPath: `${webpackConfig.VUE_APP_PUBLIC_PATH}dll`
     })
   ],
   resolve: {

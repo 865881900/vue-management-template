@@ -1,5 +1,12 @@
 import Vue from 'vue';
 import App from '@/App.vue';
+import router from '@/router';
+import store from '@/store';
+
+import { BaseRouterLoading } from '@/components/app/app-router-loading/index.js';
+import { axios } from './http';
+
+Vue.use(BaseRouterLoading, axios.axios);
 
 // 按需引入UI框架
 import { Button, Select } from 'element-gui';
@@ -12,9 +19,6 @@ Vue.use(Select);
 
 // 引入全局的css样式
 import('@/assets/css/index.css');
-
-import router from '@/router';
-import store from '@/store';
 
 new Vue({
   router,

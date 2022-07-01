@@ -11,5 +11,5 @@
 .vscode
 .idea
 .husky
-vue.config.js
+vue.webpackConfig.js
 test

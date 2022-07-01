@@ -36,7 +36,7 @@ VueManagementTemplate
 ├─.stylelintignore stylelint忽略的文件配置
 ├─.stylelintrc.js stylelint 格式规则; get地址: https://github.com/stylelint/stylelint
 ├─README.md 项目说明
-├─babel.config.js babel配置
+├─babel.webpackConfig.js babel配置
 ├─package.json
 ├─webpack
 |    ├─webpack.base.js webpack基础配置

@@ -10,6 +10,7 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const PurgeCSSPlugin = require('purgecss-webpack-plugin');
+const webpackConfig = require('./webpackConfig');
 const webpackProd = {
   optimization: {
     splitChunks: {
@@ -49,7 +50,7 @@ const webpackProd = {
 };
 
 // 打包速度分析, 使用分析会和AddAssetHtmlPlugin插件有冲突
-if (process.env.TEST_SPEED === 'true') {
+if (webpackConfig.TEST_SPEED === 'true') {
   const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
   const configWithTimeMeasures = new SpeedMeasurePlugin().wrap(merge(webpackProd, webpackBase));
   configWithTimeMeasures.plugins.push(
