@@ -13,7 +13,7 @@ const router = new VueRouter({
       title: '登录',
       name: 'login',
       path: '/login',
-      component: () => import('@/views/login/Login'),
+      component: () => import('@/views/login/index'),
       meta: {
         notLogin: true
       }

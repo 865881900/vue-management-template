@@ -61,11 +61,14 @@ module.exports = {
     ]
   },
   plugins: [
-    require('postcss-preset-env'),
     // dist文件目录清理
     new CleanWebpackPlugin(),
     // 优化命令行
     new FriendlyErrorsWebpackPlugin(),
+    // html
+    new HtmlWebpackPlugin({
+      template: './index.html'
+    }),
     // 建立dll映射
     new webpack.DllReferencePlugin({
       context: __dirname,
@@ -74,10 +77,6 @@ module.exports = {
     new webpack.DllReferencePlugin({
       context: __dirname,
       manifest: require('./dist/vue-manifest.json')
-    }),
-    // html
-    new HtmlWebpackPlugin({
-      template: './index.html'
     }),
     // 引入dll文件
     new AddAssetHtmlPlugin({
@@ -92,6 +91,10 @@ module.exports = {
       '@': path.resolve('src'),
       api: path.resolve('http/api')
     }
+  },
+  performance: {
+    hints: false
+    // maxAssetSize: 512000
   },
   stats: 'errors-only'
 };

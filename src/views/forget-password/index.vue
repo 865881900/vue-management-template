@@ -8,7 +8,6 @@
 </template>
 <script>
 export default {
-  name: 'ForgetPassword',
-  data: () => ({})
+  name: 'ForgetPassword'
 };
 </script>

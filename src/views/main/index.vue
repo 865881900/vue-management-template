@@ -4,16 +4,13 @@
 @update: 2022/4/16 9:36 PM
 -->
 <template>
-  <div>框架首页</div>
+  <div class="a">框架首页</div>
 </template>
 <script>
 export default {
   name: 'Main',
-  data: () => ({}),
-  components: {},
-  computed: {},
-  methods: {}
+  created() {}
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>

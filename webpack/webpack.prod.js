@@ -1,22 +1,32 @@
 /**
  * 正式环境打包配置
  */
+const glob = require('glob');
+
 const webpackBase = require('./webpack.base');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { merge } = require('webpack-merge');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
+const PurgeCSSPlugin = require('purgecss-webpack-plugin');
 const webpackProd = {
   optimization: {
     splitChunks: {
-      minSize: 1024 * 200,
+      minSize: 0,
       cacheGroups: {
         commons: {
           minChunks: 2,
-          // test: /(react|reack-dom)/,
+          test: /\.js$/,
           name: 'commons',
           chunks: 'all'
+        },
+        styles: {
+          minChunks: 2,
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
         }
       }
     },
@@ -30,7 +40,12 @@ const webpackProd = {
       })
     ]
   },
-  mode: 'production'
+  mode: 'production',
+  plugins: [
+    new PurgeCSSPlugin({
+      paths: glob.sync('src/**/*', { nodir: true })
+    })
+  ]
 };
 
 // 打包速度分析, 使用分析会和AddAssetHtmlPlugin插件有冲突
