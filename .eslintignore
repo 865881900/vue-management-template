@@ -1,6 +1,8 @@
 /node_modules
 /dist
+/build
 /public
+/server
 **/*.svg
 **/*.sh
 *.md
