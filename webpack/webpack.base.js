@@ -7,28 +7,49 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const webpack = require('webpack');
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+
 const webpackConfig = require('./webpackConfig');
-// const PostcssPresetEnv = require('postcss-preset-env');
-// 多线程构建,预热
-// const threadLoader = require('thread-loader');
-// threadLoader.warmup({}, ['babel-loader']);
+
 console.log(`\x1b[91m${`执行配置:${webpackConfig.EXPLAIN}`}\x1b[0m`);
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    publicPath: webpackConfig.VUE_APP_PUBLIC_PATH
+    publicPath: webpackConfig.VUE_APP_PUBLIC_PATH,
+    filename: 'js/[name].js',
+    assetModuleFilename: 'images/[hash][ext][query]'
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/i,
-        use: ['thread-loader', 'babel-loader']
+        include: path.resolve('src'),
+        use: [
+          'thread-loader',
+          {
+            loader: 'babel-loader',
+            options: {
+              exclude: /node_modules/,
+              cacheDirectory: true // 开启缓存
+            }
+          }
+        ]
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            }
+          },
+          'css-loader',
+          {
+            loader: 'postcss-loader'
+          },
+          'sass-loader'
+        ]
       },
       {
         test: /\.css$/i,
@@ -36,20 +57,26 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif)$/i,
-        use: [
-          {
-            loader: 'url-loader', // 压缩图片为base64格式
-            options: {
-              limit: 1024 * 100,
-              fallback: {
-                loader: 'file-loader',
-                options: {
-                  name: 'image/[folder]/[name].[hash:8].[ext]'
-                }
-              }
-            }
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 1024 * 10
           }
-        ]
+        }
+        // use: [
+        //   {
+        //     loader: 'url-loader', // 压缩图片为base64格式
+        //     options: {
+        //       limit: 1024 * 100,
+        //       fallback: {
+        //         loader: 'file-loader',
+        //         options: {
+        //           name: 'image/[folder]/[name].[hash:8].[ext]'
+        //         }
+        //       }
+        //     }
+        //   }
+        // ]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|)$/i,
@@ -57,7 +84,9 @@ module.exports = {
       },
       {
         test: /\.vue$/i,
-        loader: 'vue-loader'
+        use: {
+          loader: 'vue-loader'
+        }
       }
     ]
   },
@@ -65,7 +94,6 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.ENV_NODE': JSON.stringify(process.env.ENV_NODE)
     }),
-
     // dist文件目录清理
     new CleanWebpackPlugin(),
     // 优化命令行
@@ -73,29 +101,18 @@ module.exports = {
     // html
     new HtmlWebpackPlugin({
       template: './index.html'
-    }),
-    // 建立dll映射
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./dist/element-manifest.json')
-    }),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./dist/vue-manifest.json')
-    }),
-    // 引入dll文件
-    new AddAssetHtmlPlugin({
-      glob: path.resolve(__dirname, '../build/library/*.dll.js'),
-      outputPath: '/dll',
-      publicPath: `${webpackConfig.VUE_APP_PUBLIC_PATH}dll`
     })
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
+      vue: path.resolve('./node_modules/vue/dist/vue.common.prod.js'),
       '@': path.resolve('src'),
-      api: path.resolve('http/api')
-    }
+      api: path.resolve('src/http/api/index.js')
+    },
+    modules: [path.resolve('node_modules')],
+    exportsFields: [],
+    mainFields: ['main']
   },
   performance: {
     hints: false

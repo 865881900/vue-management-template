@@ -1,5 +1,7 @@
 import VueRouter from 'vue-router';
 import Vue from 'vue';
+import { ControlDynamicRouter } from './dynamicRouter/ControlDynamicRouter.js';
+import { user } from '../http/api/index.js';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -45,6 +47,29 @@ const router = new VueRouter({
     };
   }
 });
+
+new ControlDynamicRouter({
+  idName: 'resCode',
+  getUserMenuPromiseFun: async () => {
+    try {
+      const {
+        data: { menuList }
+      } = await user.init();
+      return menuList;
+    } catch (e) {
+      console.log('获取路由信息失败');
+      return [];
+    }
+  },
+  addRouteOption: {
+    title: 'main',
+    name: 'Main',
+    path: '/main',
+    component: () => import('@/views/main')
+  },
+  router: router
+});
+
 // 处理路由异常
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {

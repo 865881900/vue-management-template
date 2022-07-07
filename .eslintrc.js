@@ -231,7 +231,7 @@ module.exports = defineConfig({
     'max-statements-per-line': 2, // 强制每一行中所允许的最大语句数量。
     'new-cap': 1, // 要求构造函数首字母大写
     'no-lonely-if': 1, // 如果 if 语句作为唯一的语句出现在 else 语句块中，往往使用 else if 形式会使代码更清晰。
-    'no-multi-assign': 2, // 禁止连续赋值
+    'no-multi-assign': 0, // 禁止连续赋值
     'no-multiple-empty-lines': [0, { max: 0 }], // 空行最多不能超过2行
     'no-trailing-spaces': 0, // 一行结束后面不要有空格
     'no-unneeded-ternary': 2, // 禁止可以在有更简单的可替代的表达式时使用三元操作符

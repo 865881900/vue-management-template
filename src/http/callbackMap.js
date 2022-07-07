@@ -1,4 +1,4 @@
-// import { Message } from 'element-gui';
+import { Message } from 'element-gui';
 
 export const callbackMap = {
   // response.status    映射处理函数
@@ -16,6 +16,9 @@ export const callbackMap = {
       //   type: 'error',
       //   single: true
       // });
+    },
+    504: () => {
+      Message.warning('服务器未启动');
     }
   },
   // response.data.code 映射处理函数
@@ -28,6 +31,16 @@ export const callbackMap = {
       //   type: 'error',
       //   single: true
       // });
+    },
+    default: (data) => {
+      if (data.code != 200) {
+        Message({
+          type: 'warning',
+          message: data.message,
+          single: true
+        });
+      }
+      return data;
     }
   }
 };

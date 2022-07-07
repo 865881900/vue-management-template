@@ -4,11 +4,13 @@ import user from './user';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  namespaced: true,
-  name: 'root',
   state: {},
   getters: {},
-  mutations: {},
+  mutations: {
+    aaa() {
+      console.log('aaaa');
+    }
+  },
   actions: {},
   modules: {
     user
