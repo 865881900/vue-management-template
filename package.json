@@ -9,9 +9,9 @@
     "install:husky": "is-ci || husky install",
     "treer": "treer -e ./result.txt -i \"/node_|.git|.vscode|.husky|.idea|static/\"",
     "dll": "webpack --config ./webpack/webpack.dll.js",
-    "build": "env-cmd -e env,env:prod webpack --config ./webpack/webpack.prod.js",
-    "build:speed": "env-cmd -e env,env:prod:speed webpack --config ./webpack/webpack.prod.js",
-    "build:dev": "env-cmd -e env,env:prod:dev webpack --config ./webpack/webpack.prod.dev.js",
+    "build": "cross-env ENV_NODE=production webpack --config ./webpack/webpack.prod.js",
+    "build:speed": "cross-env ENV_NODE=production-speed webpack --config ./webpack/webpack.prod.js",
+    "build:dev": "cross-env ENV_NODE=production-dev webpack --config ./webpack/webpack.prod.dev.js",
     "dev": "npm run serve",
     "serve": "cross-env ENV_NODE=development  webpack serve --config ./webpack/webpack.dev.js"
   },
@@ -49,6 +49,7 @@
     "express": "^4.18.1",
     "file-loader": "6.2",
     "fs-extra": "^10.1.0",
+    "glob-all": "^3.3.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.0",
     "is-ci": "^3.0.1",
@@ -58,6 +59,7 @@
     "postcss": "^8.4.14",
     "postcss-html": "^1.4.1",
     "postcss-loader": "^7.0.0",
+    "postcss-scss": "^4.0.4",
     "prettier": "^2.7.1",
     "prettier-eslint": "^15.0.1",
     "pretty-quick": "^3.1.3",
@@ -89,7 +91,7 @@
     "loadsh": "^0.0.4",
     "postcss-cli": "^10.0.0",
     "vue": "^2.6.11",
-    "vue-router": "^3.3.2",
+    "vue-router": "^3.0.7",
     "vuex": "^3.4.0"
   },
   "directories": {
