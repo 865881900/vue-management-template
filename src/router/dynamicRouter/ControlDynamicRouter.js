@@ -33,10 +33,10 @@ export class ControlDynamicRouter {
   _pathMap = [];
 
   /**
-   * @param router Router对象
-   * @param option = {
-   *   resCode: 路由组件的唯一标识字段;
-   * }
+   * @param options.idName 如果本地routes中配置和api返回权限中用模块的唯一ID; 用来匹配权限对应的模块
+   * @param options.getUserMenuPromiseFun 获取用户角色权限信息的api封装,返回该用户的权限列表函数
+   * @param options.addRouteOption 模块需要依赖的父组件,该组件必须有<router-view>标签
+   * @param options.router 全局Router对象
    */
   constructor(options) {
     // 把绑menuList定到vue实例上
@@ -67,6 +67,10 @@ export class ControlDynamicRouter {
           return;
         }
         const userMenu = await this.getUserMenuPromiseFun();
+        if (userMenu.length === 0) {
+          next();
+          return;
+        }
         await this.initMenuList(userMenu);
         next(to.path);
       } catch (e) {
@@ -125,7 +129,7 @@ export class ControlDynamicRouter {
 
   /**
    * 根据权限code, 返回路由配置对象; 如果没有匹配到,则返回false;
-   * @param code 权限code
+   * @param userItem 角色权限对象
    * @return {boolean|*} 路由对象
    */
   _getMenusEntityByCode(userItem) {

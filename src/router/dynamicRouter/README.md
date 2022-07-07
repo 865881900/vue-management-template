@@ -61,6 +61,7 @@ interface RouteConfig {
   pathToRegexpOptions?: Object; // 编译正则的选项
 }
 ```
+  模块需要依赖的父组件,该组件必须有<router-view>标签
 
 router
 * 类型: Router
