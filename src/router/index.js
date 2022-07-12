@@ -51,20 +51,15 @@ const router = new VueRouter({
 new ControlDynamicRouter({
   idName: 'resCode',
   getUserMenuPromiseFun: async () => {
-    try {
-      const {
-        data: { menuList }
-      } = await user.init();
-      return menuList;
-    } catch (e) {
-      console.log('获取路由信息失败');
-      return [];
-    }
+    const {
+      data: { menuList }
+    } = await user.init();
+    return menuList;
   },
   addRouteOption: {
+    path: '/',
     title: 'main',
     name: 'Main',
-    path: '/main',
     component: () => import('@/views/main')
   },
   router: router

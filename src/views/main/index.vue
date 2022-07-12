@@ -12,9 +12,7 @@
 <script>
 export default {
   name: 'Main',
-  created() {
-    console.log(this.$dynamicRouter.menuList);
-  },
+  created() {},
   watch: {
     '$dynamicRouter.menuList'(l, n) {
       console.log(l, n, '监听变化');

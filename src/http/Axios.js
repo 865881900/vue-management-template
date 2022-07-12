@@ -10,7 +10,9 @@ import _ from 'loadsh';
 import { callbackMap } from './callbackMap.js';
 import requestInterceptors from './interceptors/request.js';
 import responseInterceptors from './interceptors/response.js';
-
+import { ControlCache } from 'gld-api-cache-ts';
+// const http = new ControlCache(/^\/aa\//);
+console.log(ControlCache);
 const responseCallback = (data) => data;
 
 export class Axios {
