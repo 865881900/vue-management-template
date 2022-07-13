@@ -22,8 +22,6 @@ html {
   font-size: 14px; /* 1 */
   color: #555;
   text-size-adjust: 100%; /* 2 */
-  text-size-adjust: 100%; /* 2 */
-  text-size-adjust: 100%; /* 2 */
 }
 
 /*
@@ -54,12 +52,6 @@ input,
 select,
 textarea {
   font-size: 100%;
-}
-input::input-placeholder {
-  text-align: left;
-}
-input::input-placeholder {
-  text-align: left;
 }
 input::placeholder {
   text-align: left;
@@ -263,8 +255,6 @@ input[type='radio'] {
  * 2. 修正 Safari 5 和 Chrome 中「box-sizing」被设置为 「border-box」的问题
  */
 input[type='search'] {
-  box-sizing: content-box;
-  box-sizing: content-box; /* 2 */
   box-sizing: content-box;
   appearance: textfield; /* 1 */
 }
