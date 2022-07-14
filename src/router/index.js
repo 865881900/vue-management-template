@@ -1,7 +1,5 @@
 import VueRouter from 'vue-router';
 import Vue from 'vue';
-import { ControlDynamicRouter } from './dynamicRouter/ControlDynamicRouter.js';
-import { user } from '../http/api/index.js';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -42,23 +40,6 @@ const router = new VueRouter({
       top: 0
     };
   }
-});
-
-new ControlDynamicRouter({
-  idName: 'resCode',
-  getUserMenuPromiseFun: async () => {
-    const {
-      data: { menuList }
-    } = await user.init();
-    return menuList;
-  },
-  addRouteOption: {
-    path: '/',
-    title: 'main',
-    name: 'Main',
-    component: () => import('@/views/main')
-  },
-  router: router
 });
 
 // 处理路由异常
