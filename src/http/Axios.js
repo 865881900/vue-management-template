@@ -10,9 +10,6 @@ import _ from 'loadsh';
 import { callbackMap } from './callbackMap.js';
 import requestInterceptors from './interceptors/request.js';
 import responseInterceptors from './interceptors/response.js';
-import ControlCache from 'gld-api-cache';
-
-const controlCache = new ControlCache(/^\/user\//, '/user/login');
 const responseCallback = (data) => data;
 
 export class Axios {
@@ -39,29 +36,22 @@ export class Axios {
     const _method = method.toUpperCase();
     let fun; // 回调函数
     try {
-      let responseData;
-      if (controlCache.has(url)) {
-        responseData = controlCache.getItem(url);
-      } else {
-        // 检查方法有效性
-        if (!Axios.METHODS_LIST.includes(_method)) {
-          console.error('请求方式不被支持');
-          return;
-        }
-        // 合并config
-        const configs = {
-          ...config,
-          url: `${this.vueAppApi}${url}${this._jointAjaxData(datas, method)}timestamp=${new Date().getTime()}`,
-          method: _method
-        };
-        // 如果不是类似get请求, 把参数添加到body中
-        if (!Axios.JOINT_METHOD.includes(_method)) {
-          config.data = datas;
-        }
-        const data = await axios.request(configs);
-        responseData = data.data;
-        controlCache.setItem(url, responseData);
+      // 检查方法有效性
+      if (!Axios.METHODS_LIST.includes(_method)) {
+        console.error('请求方式不被支持');
+        return;
       }
+      // 合并config
+      const configs = {
+        ...config,
+        url: `${this.vueAppApi}${url}${this._jointAjaxData(datas, method)}timestamp=${new Date().getTime()}`,
+        method: _method
+      };
+      // 如果不是类似get请求, 把参数添加到body中
+      if (!Axios.JOINT_METHOD.includes(_method)) {
+        config.data = datas;
+      }
+      const { data: responseData } = await axios.request(configs);
       // 根据statue和code 返回回调函数,如果没有配置,则使用默认回调函数;
       fun = callbackMap.code[responseData.code] || callbackMap.status[responseData.status] || responseCallback;
       // 执行回调函数
