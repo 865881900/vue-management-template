@@ -34,10 +34,6 @@ const router = new VueRouter({
       meta: {
         notLogin: true
       }
-    },
-    {
-      path: '*',
-      redirect: '/main'
     }
   ],
   // 路由切换, 滚动条重置

@@ -13,7 +13,8 @@
     "build:speed": "cross-env ENV_NODE=production-speed webpack --config ./webpack/webpack.prod.js",
     "build:dev": "cross-env ENV_NODE=production-dev webpack --config ./webpack/webpack.prod.dev.js",
     "dev": "npm run serve",
-    "serve": "cross-env ENV_NODE=development  webpack serve --config ./webpack/webpack.dev.js"
+    "serve": "cross-env ENV_NODE=development  webpack serve --config ./webpack/webpack.dev.js",
+    "loca": "cd ./server && npm run server"
   },
   "keywords": [],
   "author": "",
@@ -88,7 +89,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "element-gui": "^1.6.3",
-    "gld-api-cache-ts": "^1.0.1",
+    "gld-api-cache": "^1.0.0",
     "loadsh": "^0.0.4",
     "postcss-cli": "^10.0.0",
     "vue": "^2.6.11",
