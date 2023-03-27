@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title> <%= htmlWebpackPlugin.options.title %> </title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- 自适应 -->
+    <script>
+    if (!Function.prototype.apply) {
+      Function.prototype.apply = function(obj, args) {
+        obj = obj == undefined ? window : Object(obj); //obj可以是js基本类型
+        var i = 0,
+          ary = [],
+          str;
+        if (args) {
+          for (len = args.length; i < len; i++) {
+            ary[i] = "args[" + i + "]";
+          }
+        }
+        obj._apply = this;
+        str = "obj._apply(" + ary.join(",") + ")";
+        try {
+          return eval(str);
+        } catch (e) {
+        } finally {
+          delete obj._apply;
+        }
+      };
+    }
+    if (!Function.prototype.call) {
+      Function.prototype.call = function(obj) {
+        var i = 1,
+          args = [];
+        for (len = arguments.length; i < len; i++) {
+          args[i - 1] = arguments[i];
+        }
+        return this.apply(obj, args);
+      };
+    }
+    (function(designWidth, maxWidth) {
+      var doc = document,
+        win = window;
+      var docEl = doc.documentElement;
+      var tid;
+      var rootItem, rootStyle;
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        if (!maxWidth) {
+          maxWidth = 540;
+        }
+        if (width > maxWidth) {
+          width = maxWidth;
+        }
+        //与淘宝做法不同，直接采用简单的rem换算方法1rem=100px
+        if(width < 1440) {
+          var rem = (1440 * 100) / designWidth;
+        } else {
+          var rem = (width * 100) / designWidth;
+        }
+      
+        //兼容UC开始
+        rootStyle = "html{font-size:" + rem + "px !important}";
+        rootItem =
+          document.getElementById("rootsize") ||
+          document.createElement("style");
+        if (!document.getElementById("rootsize")) {
+          document
+            .getElementsByTagName("head")[0]
+            .appendChild(rootItem);
+          rootItem.id = "rootsize";
+        }
+        if (rootItem.styleSheet) {
+          rootItem.styleSheet.disabled ||
+          (rootItem.styleSheet.cssText = rootStyle);
+        } else {
+          try {
+            rootItem.innerHTML = rootStyle;
+          } catch (f) {
+            rootItem.innerText = rootStyle;
+          }
+        }
+        //兼容UC结束
+        docEl.style.fontSize = rem + "px";
+      }
+      refreshRem();
+
+      win.addEventListener(
+        "resize",
+        function() {
+          clearTimeout(tid); //防止执行两次
+          tid = setTimeout(refreshRem, 300);
+        },
+        false
+      );
+
+      win.addEventListener(
+        "pageshow",
+        function(e) {
+          if (e.persisted) {
+            // 浏览器后退的时候重新计算
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 300);
+          }
+        },
+        false
+      );
+
+      if (doc.readyState === "complete") {
+        doc.body.style.fontSize = "16px";
+      } else {
+        doc.addEventListener(
+          "DOMContentLoaded",
+          function(e) {
+            doc.body.style.fontSize = "16px";
+          },
+          false
+        );
+      }
+    })(1920, 1920);
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>

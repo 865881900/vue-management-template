@@ -61,7 +61,6 @@ const webpackProd = {
       outputPath: '/dll',
       publicPath: `${webpackConfig.VUE_APP_PUBLIC_PATH}dll`
     })
-    // new PurgeCSSPlugin({
   ]
 };
 // 打包速度分析, 使用分析会和AddAssetHtmlPlugin插件有冲突

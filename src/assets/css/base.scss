@@ -22,6 +22,8 @@ html {
   font-size: 14px; /* 1 */
   color: #555;
   text-size-adjust: 100%; /* 2 */
+  min-width: 1440px;
+  overflow-x: auto;
 }
 
 /*

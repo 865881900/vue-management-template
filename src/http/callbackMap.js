@@ -1,46 +1,54 @@
 import { Message } from 'element-gui';
+import { codeDefaultCallback } from './util';
+
+const defaultData = {
+  code: 1000,
+  data: {},
+  message: ''
+};
 
 export const callbackMap = {
   // response.status    映射处理函数
   status: {
-    401: (data) => {
-      console.log('无权限');
-      return data;
+    401: () => {
+      console.log('无权限或者登录超时');
       // 无权限操作
+      return defaultData;
     },
-    500: (data) => {
-      console.log('500', data.toString());
-      // Message({
-      //   showClose: true,
-      //   message: '服务器异常',
-      //   type: 'error',
-      //   single: true
-      // });
+    404: ({ config }) => {
+      if (process.env.NODE_ENV === 'development') {
+        Message.warning(`${config.url}请检查url拼写是否正确,404`);
+      } else {
+        console.error('请检查url拼写是否正确');
+      }
+      return defaultData;
+    },
+    500: ({ config }) => {
+      if (process.env.NODE_ENV === 'development') {
+        Message.warning(`${config.url}服务器500`);
+      } else {
+        console.error('服务器异常');
+      }
+      return defaultData;
     },
     504: () => {
-      Message.warning('服务器未启动');
+      if (process.env.NODE_ENV === 'development') {
+        Message.warning('服务器未启动');
+      } else {
+        console.error('服务器未启动');
+      }
+      return defaultData;
     }
   },
   // response.data.code 映射处理函数
   code: {
-    500: ({ msg }) => {
-      console.log(msg);
-      // Message({
-      //   showClose: true,
-      //   message: msg || '网络异常,请稍后重试',
-      //   type: 'error',
-      //   single: true
-      // });
-    },
-    default: (data) => {
-      if (data.code != 200) {
-        Message({
-          type: 'warning',
-          message: data.message,
-          single: true
-        });
+    500: (data) => {
+      if (process.env.NODE_ENV === 'development') {
+        Message.warning(`接口报错: ${data.message}`);
+      } else {
+        Message.warning(data.message);
       }
-      return data;
+      return codeDefaultCallback();
     }
   }
 };

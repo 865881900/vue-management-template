@@ -15,7 +15,8 @@ const router = new VueRouter({
       path: '/login',
       component: () => import('@/views/login/index'),
       meta: {
-        notLogin: true
+        notLogin: true,
+        isNotScroll: true
       }
     },
     {
@@ -23,19 +24,23 @@ const router = new VueRouter({
       name: 'Main',
       path: '/main',
       component: () => import('@/views/main/index')
-    },
-    {
-      title: '找回密码',
-      name: 'forget-password',
-      path: '/forget-password',
-      component: () => import('@/views/forget-password'),
-      meta: {
-        notLogin: true
-      }
     }
+    // {
+    //   title: '找回密码',
+    //   name: 'forget-password',
+    //   path: '/forget-password',
+    //   component: () => import('@/views/forget-password'),
+    //   meta: {
+    //     notLogin: true
+    //   }
+    // }
   ],
   // 路由切换, 滚动条重置
-  scrollBehavior() {
+  scrollBehavior(router) {
+    const { isNotScroll } = router.meta;
+    if (isNotScroll === true) {
+      return {};
+    }
     return {
       top: 0
     };

@@ -36,17 +36,18 @@ VueManagementTemplate
 ├─.stylelintignore stylelint忽略的文件配置
 ├─.stylelintrc.js stylelint 格式规则; get地址: https://github.com/stylelint/stylelint
 ├─README.md 项目说明
-├─babel.webpackConfig.js babel配置
+├─babel.config.js babel配置
 ├─package.json
 ├─webpack
+|    ├─webpack.dll.js  分包配置
 |    ├─webpack.base.js webpack基础配置
 |    ├─webpack.dev.js  本地环境配置
 |    ├─webpack.prod.dev.js 测试环境配置
-|    └webpack.prod.js 生产环境配置
+|    └ webpack.prod.js 生产环境配置
 ├─src
-|  ├─App.vue
-|  ├─a.js
-|  └main.js
+|  ├─ components
+|  |    ├─ appComponents   业务组件
+|  |    └  utilsComponents 工具组件
 └result.txt 使用treer生成目录结构文件存储, 使用treer, 需要安装 sudo npm i treer -g
 ```
 

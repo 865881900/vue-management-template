@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const webpackConfig = require('./webpackConfig');
 
@@ -90,6 +91,9 @@ module.exports = {
       }
     ]
   },
+  externals: {
+    vue: 'vue'
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.ENV_NODE': JSON.stringify(process.env.ENV_NODE)
@@ -100,15 +104,21 @@ module.exports = {
     new FriendlyErrorsWebpackPlugin(),
     // html
     new HtmlWebpackPlugin({
-      template: './index.html'
+      template: 'public/index.html',
+      title: webpackConfig.VUE_APP_TITLE
+    }),
+    // 公用资源
+    new CopyPlugin({
+      patterns: [{ from: path.resolve(__dirname, '../static'), to: 'static' }]
     })
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      vue: path.resolve('./node_modules/vue/dist/vue.common.prod.js'),
+      '@vue': path.resolve('./node_modules/vue/dist/vue.common.prod.js'),
       '@': path.resolve('src'),
-      api: path.resolve('src/http/api/index.js')
+      '@api': path.resolve('src/http/api/index.js'),
+      '@utils': path.resolve('src/utils')
     },
     modules: [path.resolve('node_modules')],
     exportsFields: [],

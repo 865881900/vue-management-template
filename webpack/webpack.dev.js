@@ -5,17 +5,18 @@ const { merge } = require('webpack-merge');
 const webpackBase = require('./webpack.base.js');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpackConfig = require('./webpackConfig');
 const webpackDev = {
   devServer: {
     host: '0.0.0.0',
-    port: 8090, // 端口号
+    port: webpackConfig.VUE_APP_API_PORT || '8080', // 端口号
     https: false, // https:{type:Boolean}
     proxy: {
-      '/api': {
+      '/expertfee': {
         changeOrigin: true,
-        target: 'http://localhost:3000',
+        target: webpackConfig.VUE_APP_API_TARGET,
         pathRewrite: {
-          '/api': '/'
+          '/expertfee': '/expertfee'
         }
       }
     }

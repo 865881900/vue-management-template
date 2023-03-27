@@ -10,8 +10,8 @@ import _ from 'loadsh';
 import { callbackMap } from './callbackMap.js';
 import requestInterceptors from './interceptors/request.js';
 import responseInterceptors from './interceptors/response.js';
-const responseCallback = (data) => data;
-
+import { isFunction } from 'loadsh/lang';
+import { codeDefaultCallback, defaultCallback } from './util';
 export class Axios {
   // 需要把data拼接到url的方式;
   static JOINT_METHOD = ['GET', 'DELETE', 'HEAD'];
@@ -41,6 +41,7 @@ export class Axios {
         console.error('请求方式不被支持');
         return;
       }
+      console.log(datas);
       // 合并config
       const configs = {
         ...config,
@@ -49,22 +50,16 @@ export class Axios {
       };
       // 如果不是类似get请求, 把参数添加到body中
       if (!Axios.JOINT_METHOD.includes(_method)) {
-        config.data = datas;
+        configs.data = datas;
       }
       const { data: responseData } = await axios.request(configs);
-      // 根据statue和code 返回回调函数,如果没有配置,则使用默认回调函数;
-      fun = callbackMap.code[responseData.code] || callbackMap.status[responseData.status] || responseCallback;
-      // 执行回调函数
-      if (_.isFunction(fun)) {
-        return fun(responseData);
-      }
+
+      fun = callbackMap.code[responseData.code];
+      return (isFunction(fun) ? fun : codeDefaultCallback)(responseData);
     } catch (e) {
       const response = e.response || {};
       fun = callbackMap.status[response.status];
-      if (_.isFunction(fun)) {
-        return fun(e);
-      }
-      return Promise.reject(e);
+      return (isFunction(fun) ? fun : defaultCallback)(response);
     }
   }
 

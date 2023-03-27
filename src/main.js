@@ -3,7 +3,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
 
-import { BaseRouterLoading } from '@/components/app/app-router-loading/index.js';
+import { BaseRouterLoading } from '@/components/app-router-loading/index.js';
 import { axios } from './http';
 
 Vue.use(BaseRouterLoading, axios.axios);
